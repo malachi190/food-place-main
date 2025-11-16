@@ -1,9 +1,12 @@
+import useAuthStore from "@/auth.store";
+import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from "expo-router";
-import "./global.css"
-import { useFonts } from 'expo-font'
 import { useEffect } from "react";
+import "./global.css";
 
 export default function RootLayout() {
+  const { isLoading, fetchAuthUser } = useAuthStore()
+
   const [fontsLoaded, error] = useFonts({
     'Quicksand-Bold': require('../assets/fonts/Quicksand-Bold.ttf'),
     'Quicksand-Light': require('../assets/fonts/Quicksand-Light.ttf'),
@@ -17,5 +20,11 @@ export default function RootLayout() {
     if (fontsLoaded) SplashScreen.hideAsync()
   }, [fontsLoaded, error])
 
-  return <Stack screenOptions={{headerShown: false}}/>;
+  useEffect(() => {
+    fetchAuthUser()
+  }, [])
+
+  if (!fontsLoaded || isLoading) return null;
+
+  return <Stack screenOptions={{ headerShown: false }} />;
 }
