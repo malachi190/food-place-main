@@ -1,4 +1,4 @@
-import useAuthStore from "@/auth.store";
+import useAuthStore from "@/store/auth.store";
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
